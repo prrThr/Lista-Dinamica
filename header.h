@@ -42,12 +42,14 @@ struct listaDisciplina
 
 template<typename T>
 using ListaAluno = struct listaAluno<T>;
+
+template<typename T>
 using ListaDisciplina = struct listaDisciplina<T>;
 
 // ---------------------------------------------------------------------//
 
 template<typename T>
-void verificarSeListaVazia(ListaAluno<T> alunos)
+bool verificarSeListaVazia(ListaAluno<T> alunos)
 {
     if (alunos.cardinalidade == 0)
         return true;
@@ -55,11 +57,6 @@ void verificarSeListaVazia(ListaAluno<T> alunos)
         return false;
 }
 
-template<typename T>
-void inserirAluno(ListaAluno<T> &alunos)
-{
-
-}
 
 template<typename T>
 void criarListas(ListaAluno<T> &alunos, ListaDisciplina<T> &disciplinas)
@@ -72,7 +69,56 @@ void criarListas(ListaAluno<T> &alunos, ListaDisciplina<T> &disciplinas)
 
 
 template<typename T>
-void destroi(ListaSimplesmenteEncadeada<T> &lista)
+bool alunoExistente(ListaAluno<T> alunos, string nome)
+{
+    // Insert code here...
+}
+
+
+template<typename T>
+bool disciplinaExistente(ListaAluno<T> alunos)
+{
+    // Insert code here...
+}
+
+
+template<typename T>
+void inserirAluno(ListaAluno<T> &alunos, string nome)
+{
+    // Insert code here...
+}
+
+
+template<typename T>
+void excluirAluno(ListaAluno<T> &alunos, string nome)
+{
+    // Insert code here...
+}
+
+
+template<typename T>
+void excluirDisciplina(ListaDisciplina<T> &disciplinas, string disciplina)
+{
+    // Insert code here...
+}
+
+
+template<typename T>
+mostrarTodos(ListaAluno<T> alunos, ListaDisciplina<T> disciplinas)
+{
+    // Insert code here...
+}
+
+
+template<typename T>
+mostrarUm(ListaAluno<T> alunos, ListaDisciplina<T> disciplinas, string nome)
+{
+    // Insert code here...
+}
+
+
+template<typename T>
+void destroi(Lista???<T> &lista)
 {
     Nodo<T> *p;
     while (lista.inicio != NULL)
