@@ -1,13 +1,3 @@
-/*
-[ ]inserção de um aluno
-[ ]inserção de disciplina de um aluno
-[ ]retirar um aluno
-[ ]retirar disciplina de um aluno
-[ ]mostrar todos os alunos
-[ ]mostrar disciplinas
-[ ]mostrar um aluno e suas disciplinas.
-*/
-
 #include <iostream>
 #include "header.h"
 using namespace std;
@@ -17,10 +7,8 @@ int main()
 
     ListaAluno<string> alunos;
     ListaDisciplina<string> disciplinas;
-
-    char resp;
     int opcao;
-    string nome;
+    string nome, disc;
 
     do
     {
@@ -36,7 +24,7 @@ int main()
         {
             cin >> opcao;
             if (opcao < 1 or opcao > 8)
-                cout << "Digite uma opção entre 1 e 8!" << endl;
+                cout << "Digite uma opÃ§Ã£o entre 1 e 8!" << endl;
         }
         while(opcao < 1 or opcao > 8);
 
@@ -53,7 +41,7 @@ int main()
                 if (!alunoExistente(alunos, nome))
                     inserirAluno(alunos, nome);
                 else
-                    cout << "Aluno já existente." << endl;
+                    cout << "Aluno jÃ¡ existente." << endl;
             }
             break;
 
@@ -64,14 +52,14 @@ int main()
             if (alunoExistente(alunos, nome))
             {
                 cout << "Digite a disciplina que deseja inserir:";
-                getline(cin, disciplina);
-                if (!disciplinaExistente(disciplinas, disciplina))
-                    inserirDisciplina(disciplinas, disciplina);
+                getline(cin, disc);
+                if (!disciplinaExistente(disciplinas, disc))
+                    inserirDisciplina(disciplinas, disc);
                 else
-                    cout << "O aluno " << nome << " já está matriculado na disciplina" << endl;
+                    cout << "O aluno " << nome << "jÃ¡ estÃ¡ matriculado na disciplina" << endl;
             }
             else
-                cout << "Aluno não existente." << endl;
+                cout << "Aluno nÃ£o existente." << endl;
             break;
 
         case 3:
@@ -81,7 +69,7 @@ int main()
             if (alunoExistente(alunos, nome))
                 excluirAluno(alunos, nome);
             else
-                cout << "Aluno não existente." << endl;
+                cout << "Aluno nÃ£o existente." << endl;
             break;
 
         case 4:
@@ -91,14 +79,14 @@ int main()
             if (alunoExistente(alunos, nome))
             {
                 cout << "Informe a disciplina que deseja excluir: ";
-                getline(cin,disciplina);
-                if (disciplinaExistente(disciplinas, disciplina))
-                    excluirDisciplina(disciplinas, disciplina);
+                getline(cin, disc);
+                if (disciplinaExistente(disciplinas, disc))
+                    excluirDisciplina(disciplinas, disc);
                 else
-                    cout << "Disciplina não existe ou o aluno não está matriculado";
+                    cout << "Disciplina nÃ£o existe ou o aluno nÃ£o estÃ¡ matriculado";
             }
             else
-                cout << "Aluno não existente." << endl;
+                cout << "Aluno nÃ£o existente." << endl;
             break;
 
         case 5:
@@ -112,27 +100,26 @@ int main()
             cout << "Digite o nome do aluno: ";
             cin.ignore();
             getline(cin,nome);
-            if (alunoExistente(alunos))
+            if (alunoExistente(alunos, nome))
                 mostrarUm(alunos, disciplinas, nome);
             else
                 cout << "Aluno inexistente." << endl;
             break;
 
         case 7:
-            if (verificarSeListaVazia(disciplinas))
+            if (verificarSeListaVazia(alunos))
                 mostrarTodos(alunos, disciplinas);
             else
-                cout << "Nenhuma disciplina cadastrada." << endl;
+                cout << "Nenhum aluno cadastrado." << endl;
             break;
 
         case 8:
             cout << "Saindo..." << endl;
-            destroi(alunos);
-            destroi(disciplinas);
+            destroiAlunos(alunos);
+            destroiDisciplinas(disciplinas);
             break;
         }
     }
     while(opcao != 8);
-
     return 0;
 }
