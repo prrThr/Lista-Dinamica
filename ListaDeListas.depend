@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1661975231 source:c:\users\user\desktop\programação\codeblocks\listadelistas\main.cpp
+	<iostream>
+	"header.h"
+
+1661975222 c:\users\user\desktop\programação\codeblocks\listadelistas\header.h
+	<iostream>
+

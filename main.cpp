@@ -6,7 +6,6 @@ int main()
     setlocale(LC_ALL,"portuguese");
 
     ListaAluno<string> alunos;
-    ListaDisciplina<string> disciplinas;
     int opcao;
     string nome, disc;
 
@@ -32,7 +31,7 @@ int main()
         {
         case 1:
             if (verificarSeListaVazia(alunos))
-                criarListas(alunos, disciplinas);
+                criarListas(alunos);
             else
             {
                 cout << "Digite o nome do aluno para inserir: ";
@@ -53,8 +52,8 @@ int main()
             {
                 cout << "Digite a disciplina que deseja inserir:";
                 getline(cin, disc);
-                if (!disciplinaExistente(disciplinas, disc))
-                    inserirDisciplina(disciplinas, disc);
+                if (!disciplinaExistente(alunos, disc))
+                    inserirDisciplina(alunos, disc);
                 else
                     cout << "O aluno " << nome << "já está matriculado na disciplina" << endl;
             }
@@ -80,8 +79,8 @@ int main()
             {
                 cout << "Informe a disciplina que deseja excluir: ";
                 getline(cin, disc);
-                if (disciplinaExistente(disciplinas, disc))
-                    excluirDisciplina(disciplinas, disc);
+                if (disciplinaExistente(alunos, disc))
+                    excluirDisciplina(alunos, disc);
                 else
                     cout << "Disciplina não existe ou o aluno não está matriculado";
             }
@@ -91,7 +90,7 @@ int main()
 
         case 5:
             if (!verificarSeListaVazia(alunos))
-                mostrarTodos(alunos, disciplinas);
+                mostrarTodos(alunos);
             else
                 cout << "Nenhum aluno cadastrado." << endl;
             break;
@@ -101,22 +100,21 @@ int main()
             cin.ignore();
             getline(cin,nome);
             if (alunoExistente(alunos, nome))
-                mostrarUm(alunos, disciplinas, nome);
+                mostrarUm(alunos, nome);
             else
                 cout << "Aluno inexistente." << endl;
             break;
 
         case 7:
             if (verificarSeListaVazia(alunos))
-                mostrarTodos(alunos, disciplinas);
+                mostrarTodos(alunos);
             else
                 cout << "Nenhum aluno cadastrado." << endl;
             break;
 
         case 8:
             cout << "Saindo..." << endl;
-            destroiAlunos(alunos);
-            destroiDisciplinas(disciplinas);
+        //    destroi(alunos); //disciplinas ta dentro do "alunos"
             break;
         }
     }

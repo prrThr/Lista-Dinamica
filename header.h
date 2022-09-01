@@ -29,7 +29,7 @@ struct ListaAluno
 {
     int cardinalidade;
     NodoAluno<T>* inicio;
-    //NodoDisciplina<T> *disciplina ?? pq do jeito que estamos fazendo não esta sendo uma lista dentro da outra
+    NodoDisciplina<T>* disciplinaAluno;
 };
 
 template<typename T>
@@ -56,12 +56,12 @@ bool verificarSeListaVazia(ListaAluno<T> alunos)
 
 // --------------------------- Cria as duas listas --------------------------- //
 template<typename T>
-void criarListas(ListaAluno<T> &alunos, ListaDisciplina<T> &disciplinas)
+void criarListas(ListaAluno<T> &alunos)
 {
     alunos.cardinalidade = 0;
-    alunos.inicio = NULL;
-    disciplinas.cardinalidade = 0;
-    disciplinas.inicio = NULL;
+    alunos.inicio->proximo = NULL;
+    alunos.disciplinaAluno->quantidadeAlunos = 0;
+    alunos.disciplinaAluno->proximo = NULL;
 }
 
 // ----------------------- Verifica se o aluno existe ----------------------- //
@@ -82,14 +82,14 @@ bool alunoExistente(ListaAluno<T> lista, string nome)
 
 // --------------------- Verifica se a disciplina existe --------------------- //
 template<typename T>
-bool disciplinaExistente(ListaDisciplina<T> lista, string disc)
+bool disciplinaExistente(ListaAluno<T> lista, string disc)
 {
-    ListaDisciplina<T> p;
+    ListaAluno<T> p;
     p.inicio = lista.inicio;
 
     while(p.inicio != NULL)
     {
-        if (lista.inicio->disciplina == disc)
+        if (lista.disciplinaAluno->disciplina == disc)
             return true;
         p.inicio = p.inicio->proximo;
     }
@@ -98,14 +98,22 @@ bool disciplinaExistente(ListaDisciplina<T> lista, string disc)
 
 // ----------------------------- Insere um aluno ----------------------------- //
 template<typename T>
-void inserirAluno(ListaAluno<T> &lista, string nome)
+void inserirAluno(ListaAluno<T> lista, string nome)
 {
-    // Insert code here...
+    //template<typename T>
+    ListaAluno<T> p;
+
+    p = lista;
+
+    while(p.inicio != NULL)
+        p.inicio = p.inicio->proximo;
+
+    p.inicio->aluno = nome;
 }
 
 // ----------------------------- Insere uma disciplina ----------------------- //
 template<typename T>
-void inserirDisciplina(ListaDisciplina<T> &lista, string disc)
+void inserirDisciplina(ListaAluno<T> &lista, string disc)
 {
     // Insert code here...
 }
@@ -119,50 +127,46 @@ void excluirAluno(ListaAluno<T> &lista, string nome)
 
 // -------------------------- Exclui uma disciplina -------------------------- //
 template<typename T>
-void excluirDisciplina(ListaDisciplina<T> &disciplinas, string disciplina)
+void excluirDisciplina(ListaAluno<T> &disciplinas, string disciplina)
 {
     // Insert code here...
 }
 
 // -------------------- Mostra os alunos e as disciplinas -------------------- //
 template<typename T>
-void mostrarTodos(ListaAluno<T> alunos, ListaDisciplina<T> disciplinas)
+void mostrarTodos(ListaAluno<T> alunos)
 {
-    // Insert code here...
+    ListaAluno<T> p;
+
+    p = alunos;
+
+    while (p.inicio != NULL)
+    {
+        cout << p.inicio->aluno << endl;
+        p.inicio = p.inicio->proximo;
+    }
 }
 
 // -------------------- Mostra um aluno e suas disciplinas -------------------- //
 template<typename T>
-void mostrarUm(ListaAluno<T> alunos, ListaDisciplina<T> disciplinas, string nome)
+void mostrarUm(ListaAluno<T> alunos, string nome)
 {
     // Insert code here...
 }
 
-// -------------------------- Destrói lista Alunos -------------------------- //
-template<typename T>
-void destroiAlunos(ListaAluno<T> &lista)
+// -------------------------- Destr�i lista Alunos -------------------------- //
+/*template<typename T>
+void destroi(ListaAluno<T> &lista)
 {
     ListaAluno<T> p;
-    while (lista.inicio != NULL)
-    {
-        p.inicio = lista.inicio;
-        lista.inicio = lista.inicio->proximo;
-        delete p.inicio;
-    }
-    lista.cardinalidade = 0;
-}
 
-// -------------------------- Destrói lista Disciplinas -------------------------- //
-template<typename T>
-void destroiDisciplinas(ListaDisciplina<T> &lista)
-{
-    ListaDisciplina<T> p;
     while (lista.inicio != NULL)
     {
-        p.inicio = lista.inicio;
+        p = lista;
         lista.inicio = lista.inicio->proximo;
-        delete p.inicio;
+        delete p;
     }
     lista.cardinalidade = 0;
-}
+*/
+
 #endif // HEADER_H_INCLUDED
