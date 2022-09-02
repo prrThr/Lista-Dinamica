@@ -9,6 +9,7 @@ int main()
     int opcao;
     string nome, disc;
 
+    criarListas(alunos);
     do
     {
         cout << "1 - Inserir aluno" << endl;
@@ -30,18 +31,13 @@ int main()
         switch(opcao)
         {
         case 1:
-            if (verificarSeListaVazia(alunos))
-                criarListas(alunos);
+            cout << "Digite o nome do aluno para inserir: ";
+            cin.ignore();
+            getline(cin,nome);
+            if (!alunoExistente(alunos, nome))
+                inserirAluno(alunos, nome);
             else
-            {
-                cout << "Digite o nome do aluno para inserir: ";
-                cin.ignore();
-                getline(cin,nome);
-                if (!alunoExistente(alunos, nome))
-                    inserirAluno(alunos, nome);
-                else
-                    cout << "Aluno já existente." << endl;
-            }
+                cout << "Aluno já existente." << endl;
             break;
 
         case 2:
