@@ -1,11 +1,11 @@
 #include <iostream>
-#include "header.h"
+#include "hesf.h"
 using namespace std;
 int main()
 {
     setlocale(LC_ALL,"portuguese");
 
-    ListaAluno<string> alunos;
+    Lista<string> alunos;
     int opcao;
     string nome, disc;
 
@@ -17,7 +17,7 @@ int main()
         cout << "4 - Retirar disciplina de um aluno" << endl;
         cout << "5 - Mostrar todos os alunos e todas as disciplinas" << endl;
         cout << "6 - Mostar aluno e suas disciplinas" << endl;
-        cout << "7 - Mostrar disciplinas" << endl;
+        cout << "7 - Mostrar lista 2" << endl;
         cout << "8 - Sair" << endl;
         do
         {
@@ -52,7 +52,7 @@ int main()
             {
                 cout << "Digite a disciplina que deseja inserir:";
                 getline(cin, disc);
-                if (!disciplinaExistente(alunos, disc))
+                if (!disciplinaExistente(alunos, disc, nome))
                     inserirDisciplina(alunos, disc);
                 else
                     cout << "O aluno " << nome << "já está matriculado na disciplina" << endl;
@@ -79,7 +79,7 @@ int main()
             {
                 cout << "Informe a disciplina que deseja excluir: ";
                 getline(cin, disc);
-                if (disciplinaExistente(alunos, disc))
+                if (disciplinaExistente(alunos, disc, nome))
                     excluirDisciplina(alunos, disc);
                 else
                     cout << "Disciplina não existe ou o aluno não está matriculado";
@@ -105,16 +105,9 @@ int main()
                 cout << "Aluno inexistente." << endl;
             break;
 
-        case 7:
-            if (verificarSeListaVazia(alunos))
-                mostrarTodos(alunos);
-            else
-                cout << "Nenhum aluno cadastrado." << endl;
-            break;
-
         case 8:
             cout << "Saindo..." << endl;
-        //    destroi(alunos); //disciplinas ta dentro do "alunos"
+            //    destroi(alunos); //disciplinas ta dentro do "alunos"
             break;
         }
     }
