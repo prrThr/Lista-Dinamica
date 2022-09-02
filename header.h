@@ -40,9 +40,6 @@ void criarListas(Lista<T> &alunos)
 {
     alunos.cardinalidade = 0;
     alunos.inicioA->proximo = NULL;
-    alunos.inicioA->disciplinas->quantidadeAlunos = 0;
-    alunos.inicioA->disciplinas->cardinalidade = 0;
-    alunos.inicioA->disciplinas->proximo = NULL;
 }
 
 // -------------------------- Destrói lista Alunos --------------------------- //
@@ -98,7 +95,7 @@ bool disciplinaExistente(Lista<T> lista, T disc, T nome)
 
     while(p != NULL)
     {
-        if (lista.inicioD->disciplina == disc)
+//        if (lista.inicioD->disciplina == disc)
             return true;
         p = p->proximo;
     }
