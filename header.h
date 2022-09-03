@@ -39,7 +39,7 @@ template<typename T>
 void criarListas(Lista<T> &alunos)
 {
     alunos.cardinalidade = 0;
-    alunos.inicioA->proximo = NULL;
+    alunos.inicioA = NULL;
 }
 
 // -------------------------- Destrói lista Alunos --------------------------- //
@@ -96,7 +96,7 @@ bool disciplinaExistente(Lista<T> lista, T disc, T nome)
     while(p != NULL)
     {
 //        if (lista.inicioD->disciplina == disc)
-            return true;
+        return true;
         p = p->proximo;
     }
     return false;
@@ -106,14 +106,26 @@ bool disciplinaExistente(Lista<T> lista, T disc, T nome)
 template<typename T>
 void inserirAluno(Lista<T> &lista, string nome)
 {
-    NodoAluno<T> *p = new NodoAluno<T>;
-    NodoAluno<T> *p_aux = lista.inicioA;
-    p->aluno = nome;
+    NodoAluno<T> *p, *p_ant;
+    p = new NodoAluno<T>;
 
-    while(p_aux != NULL)
-        p_aux = p_aux->proximo;
-    p_aux->aluno = p->aluno;
-    p_aux->proximo = NULL;
+    p->aluno = nome;
+    p->proximo = NULL;
+
+    if(lista.cardinalidade == 0)
+    {
+        lista.inicioA = p;
+        lista.cardinalidade++;
+        cout << "Aluno " << p->aluno << " inserido." << endl;
+        return;
+    }
+
+    p_ant = lista.inicioA;
+    while(p_ant->proximo != NULL)
+        p_ant = p_ant->proximo;
+    p_ant->proximo = p;
+
+    cout << "Aluno " << p->aluno << " inserido." << endl;
 }
 
 // ----------------------------- Insere uma disciplina de um aluno ----------- //
@@ -147,7 +159,6 @@ void mostrarTodos(Lista<T> lista)
     while (p != NULL)
     {
         cout << p->aluno << endl;
-        //cout << << endl;
         p = p->proximo;
     }
 }
