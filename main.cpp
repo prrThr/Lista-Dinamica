@@ -49,7 +49,7 @@ int main()
                 cout << "Digite a disciplina que deseja inserir:";
                 getline(cin, disc);
                 if (!disciplinaExistente(alunos, disc, nome))
-                    inserirDisciplina(alunos, disc);
+                    inserirDisciplina(alunos, disc, nome);
                 else
                     cout << "O aluno " << nome << "já está matriculado na disciplina" << endl;
             }
@@ -76,7 +76,7 @@ int main()
                 cout << "Informe a disciplina que deseja excluir: ";
                 getline(cin, disc);
                 if (disciplinaExistente(alunos, disc, nome))
-                    excluirDisciplina(alunos, disc);
+                    excluirDisciplina(alunos, disc, nome);
                 else
                     cout << "Disciplina não existe ou o aluno não está matriculado";
             }
@@ -103,7 +103,7 @@ int main()
 
         case 8:
             cout << "Saindo..." << endl;
-            //    destroi(alunos); //disciplinas ta dentro do "alunos"
+            destroi(alunos); //disciplinas ta dentro do "alunos"
             break;
         }
     }
