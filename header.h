@@ -35,7 +35,7 @@ struct ListaDisciplina
 };*/
 
 // --------------------------- Cria as duas listas --------------------------- //
-template<typename T>
+template<typename T> //OK
 void criarListas(Lista<T> &alunos)
 {
     alunos.cardinalidade = 0;
@@ -46,17 +46,17 @@ void criarListas(Lista<T> &alunos)
 template<typename T>
 void destroi(Lista<T> &lista)
 {
-    Lista<T> p;
+    NodoAluno<T> *p;
     while (lista.inicioA != NULL)
     {
-        p = lista;
+        p = lista.inicioA;
         lista.inicioA = lista.inicioA->proximo;
         delete p;
     }
     lista.cardinalidade = 0;
 }
 // ------------------------- Verifica se lista vazia ------------------------- //
-template<typename T>
+template<typename T> //OK
 bool verificarSeListaVazia(Lista<T> alunos)
 {
     if (alunos.cardinalidade == 0)
@@ -95,7 +95,7 @@ int numeroDisciplinas(Lista<T> lista, T nome, T disc)
 }
 
 // ----------------------- Verifica se o aluno existe ------------------------ //
-template<typename T>
+template<typename T> // OK
 bool alunoExistente(Lista<T> lista, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -109,7 +109,7 @@ bool alunoExistente(Lista<T> lista, T nome)
 }
 
 // --------------------- Verifica se a disciplina de um aluno existe --------- //
-template<typename T> // TESTAR PQ PROVAVELMENTE NAO ESTA CERTO
+template<typename T> // NÃO ESTA FUNCIONANDO
 bool disciplinaExistente(Lista<T> lista, T disc, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -136,8 +136,8 @@ bool disciplinaExistente(Lista<T> lista, T disc, T nome)
     }
 }
 // ----------------------------- Insere um aluno ----------------------------- //
-template<typename T>
-void inserirAluno(Lista<T> &lista, string nome)
+template<typename T> //OK
+void inserirAluno(Lista<T> &lista, T nome)
 {
     NodoAluno<T> *p, *p_ant;
     NodoDisciplina<T> *p2;
@@ -167,12 +167,12 @@ void inserirAluno(Lista<T> &lista, string nome)
 }
 
 // ----------------------------- Insere uma disciplina de um aluno ----------- //
-template<typename T>
-void inserirDisciplina(Lista<T> &lista, string disc, T nome)
+template<typename T> // ESTA FUNCIONANDO PARA INSERIR UMA DISCIPLINA APENAS. ARRUMAR
+void inserirDisciplina(Lista<T> &lista, T disc, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
     NodoDisciplina<T> *p_aux, *p_aux_ant;
-    //p_aux = new NodoDisciplina<T>;
+    p_aux = new NodoDisciplina<T>;
     p_aux->proximo = NULL;
     while(p != NULL)
     {
@@ -200,36 +200,145 @@ void inserirDisciplina(Lista<T> &lista, string disc, T nome)
 }
 
 // ----------------------------- Exclui um aluno ----------------------------- //
-template<typename T>
-void excluirAluno(Lista<T> &lista, string nome)
+template<typename T> //APARENTEMENTE FUNCIONANDO
+void excluirAluno(Lista<T> &lista, T nome)
 {
-    // Insert code here...
+    NodoAluno<T> *p = lista.inicioA;
+    NodoAluno<T> *p_ant = lista.inicioA;
+    int contador = 1;
+    while(p != NULL)
+    {
+        if (p->aluno == nome)
+        {
+            if (contador == 1) //caso for o primeiro da lista
+            {
+                lista.inicioA = lista.inicioA->proximo;
+                cout << "chegou aqui" << endl;
+                delete p;
+            }
+            else
+            {
+                while(p_ant->proximo != p)
+                    p_ant = p_ant->proximo;
+                cout << "chegou aqui" << endl;
+                p_ant->proximo = p->proximo;
+                delete p;
+                cout << "Aluno excluido!" << endl;
+                return;
+            }
+        }
+        contador++;
+        p = p->proximo;
+    }
 }
+//1010 1020 1030
+//p = 1020 pProx = 1030
+//p_ant = 1010 paProx = 1020;
+//paProx = pProx, 1020 = 1030
+//delete p(1020)
 
 // -------------------------- Exclui uma disciplina de um aluno -------------- //
 template<typename T>
-void excluirDisciplina(Lista<T> &disciplinas, string disciplina)
+void excluirDisciplina(Lista<T> &lista, T disciplina, T nome)
 {
-    // Insert code here...
+    NodoAluno<T> *p = lista.inicioA;
+    NodoDisciplina<T> *p_ant;
+    NodoDisciplina<T> *p_aux;
+    int contador = 1;
+
+    while(p != NULL)
+    {
+        if (p->aluno == nome)
+        {
+            p_aux = p->disciplinas;
+            p_ant = p->disciplinas;
+            cout << "chegou aqui" << endl;
+            while(p_aux != NULL)
+            {
+                cout << "chegou aqui" << endl;
+
+                if (contador == 1) //caso for o primeiro da lista
+                {
+                    p_aux = p_aux->proximo;
+                    cout << "chegou aqui" << endl;
+                    delete p_aux;
+                }
+                else
+                {
+                    while(p_ant->proximo != p_aux)
+                        p_ant = p_ant->proximo;
+                    cout << "chegou aqui" << endl;
+                    p_ant->proximo = p_aux->proximo;
+                    delete p_aux;
+                    cout << "Disciplina excluida!" << endl;
+                    return;
+                }
+                contador++;
+                p_aux = p_aux->proximo;
+            }
+        }
+        p = p->proximo;
+    }
 }
 
 // -------------------- Mostra os alunos e as disciplinas -------------------- //
-template<typename T> // FALTA MOSTRAR DISCIPLINA
+template<typename T> // NÃO ESTA FAZENDO NADA MAS PARECE QUASE CERTO.
 void mostrarTodos(Lista<T> lista)
 {
     NodoAluno<T> *p = lista.inicioA;
+    NodoDisciplina<T> *p_aux;
 
-    while (p != NULL)
+    for(int i = 1; i < lista.cardinalidade; i++)
     {
-        cout << p->aluno << endl;
+        p_aux = p->disciplinas;
+        cout << "Aluno: " << p->aluno << endl;
+        if (p_aux == NULL)
+        {
+            cout << "O aluno não esta cadastrado em nenhuma disciplina" << endl;
+        }
+        else
+        {
+            cout << "Disciplinas: ";
+            while(p_aux != NULL)
+            {
+                cout << p_aux->disciplina << " ";
+                p_aux = p_aux->proximo;
+            }
+            cout << endl;
+        }
         p = p->proximo;
     }
 }
 
 // -------------------- Mostra um aluno e suas disciplinas -------------------- //
-template<typename T>
-void mostrarUm(Lista<T> alunos, string nome)
+template<typename T> //APARENTEMENTE FUNCIONANDO
+void mostrarUm(Lista<T> lista, T nome)
 {
-    // Insert code here...
+    NodoAluno<T> *p = lista.inicioA;
+    NodoDisciplina<T> *p_aux;
+
+
+    while (p != NULL)
+    {
+        if (p->aluno == nome)
+        {
+            p_aux = p->disciplinas;
+            cout << "Aluno: " << p->aluno << endl;
+            if (p_aux == NULL)
+            {
+                cout << "O aluno não esta cadastrado em nenhuma disciplina" << endl;
+                return;
+            }
+            cout << "Disciplinas: ";
+            while(p_aux != NULL)
+            {
+                cout << p_aux->disciplina << " ";
+                p_aux = p_aux->proximo;
+            }
+            cout << endl;
+            return;
+        }
+        p = p->proximo;
+    }
 }
 #endif // HEADER_H_INCLUDED
