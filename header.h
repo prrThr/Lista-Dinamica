@@ -7,8 +7,6 @@ template<typename T>
 struct NodoDisciplina
 {
     T disciplina;
-    int cardinalidade; //Quantidade de alunos que cursam a disciplina
-    int quantidadeAlunos;
     struct NodoDisciplina *proximo;
 };
 
@@ -131,7 +129,6 @@ template<typename T> //OK
 void inserirAluno(Lista<T> &lista, T nome)
 {
     NodoAluno<T> *p, *p_ant;
-    NodoDisciplina<T> *p2;
     p = new NodoAluno<T>;
     p->aluno = nome;
     p->cardinalidadeD = 0;
@@ -179,8 +176,6 @@ void inserirDisciplina(Lista<T> &lista, T disc, T nome)
 
             p->cardinalidadeD++;
             p2->disciplina = disc;
-            p2->cardinalidade++;
-            p2->quantidadeAlunos++;
             p2->proximo = NULL;
 
 
@@ -321,5 +316,15 @@ void mostrarUm(Lista<T> lista, T nome)
         }
         p = p->proximo;
     }
+}
+
+string inserirNome(string texto)
+{
+    string nome;
+    cout << texto;
+    cin.ignore();
+    getline(cin,nome);
+
+    return nome;
 }
 #endif // HEADER_H_INCLUDED

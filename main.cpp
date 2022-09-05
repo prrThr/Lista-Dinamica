@@ -59,9 +59,7 @@ int main()
         switch(opcao)
         {
         case 1:
-            cout << "Digite o nome do aluno para inserir: ";
-            cin.ignore();
-            getline(cin,nome);
+            nome = inserirNome("Digite o nome do aluno para inserir: ");
             if (!alunoExistente(alunos, nome))
                 inserirAluno(alunos, nome);
             else
@@ -69,9 +67,7 @@ int main()
             break;
 
         case 2:
-            cout << "Digite o aluno para que deseja inserir uma disciplina: ";
-            cin.ignore();
-            getline(cin,nome);
+            nome = inserirNome("Digite o aluno para que deseja inserir uma disciplina: ");
             if (alunoExistente(alunos, nome))
             {
                 cout << "Digite a disciplina que deseja inserir:";
@@ -86,9 +82,7 @@ int main()
             break;
 
         case 3:
-            cout << "Digite o aluno que deseja excluir: ";
-            cin.ignore();
-            getline(cin,nome);
+            nome = inserirNome("Digite o aluno que deseja excluir: ");
             if (alunoExistente(alunos, nome))
                 excluirAluno(alunos, nome);
             else
@@ -96,9 +90,7 @@ int main()
             break;
 
         case 4:
-            cout << "Digite o nome do aluno que deseja excluir a disciplina: ";
-            cin.ignore();
-            getline(cin,nome);
+            nome = inserirNome("Digite o nome do aluno que deseja excluir a disciplina: ");
             if (alunoExistente(alunos, nome))
             {
                 cout << "Informe a disciplina que deseja excluir: ";
@@ -120,9 +112,7 @@ int main()
             break;
 
         case 6:
-            cout << "Digite o nome do aluno: ";
-            cin.ignore();
-            getline(cin,nome);
+            nome = inserirNome("Digite o nome do aluno: ");
             if (alunoExistente(alunos, nome))
                 mostrarUm(alunos, nome);
             else
@@ -138,9 +128,7 @@ int main()
             break;
 
         case 9:
-            cout << "Digite o nome do aluno que deseja verificar a quantidade de disciplinas: ";
-            cin.ignore();
-            getline(cin,nome);
+            nome = inserirNome("Digite o nome do aluno que deseja verificar a quantidade de disciplinas: ");
             if (alunoExistente(alunos,nome))
                 cout << "Numero de disciplinas do aluno " << nome << ": " << numeroDisciplinas(alunos, nome) << endl;
             else
