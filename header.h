@@ -3,15 +3,11 @@
 #include <iostream>
 using namespace std;
 
-"*disciplinas" ALTERADO PARA "inicioD"
-"p_aux" ALTERADO PARA "p2" quando se refere a lista de disciplinas
-"alunos" ALTERADO PARA "lista"
-
 template<typename T>
 struct NodoDisciplina
 {
     T disciplina;
-    int cardinalidade;
+    int cardinalidade; //Quantidade de alunos que cursam a disciplina
     int quantidadeAlunos;
     struct NodoDisciplina *proximo;
 };
@@ -20,6 +16,7 @@ template<typename T>
 struct NodoAluno
 {
     T aluno;
+    int cardinalidadeD; //Quantidade de disciplinas que o aluno esta matriculado
     NodoDisciplina<T> *inicioD;
     struct NodoAluno *proximo;
 };
@@ -27,7 +24,7 @@ struct NodoAluno
 template<typename T>
 struct Lista
 {
-    int cardinalidade;
+    int cardinalidade; //Quantidade de alunos no total
     NodoAluno<T>* inicioA;
 };
 
@@ -47,7 +44,7 @@ void criarListas(Lista<T> &lista)
 }
 
 // -------------------------- Destrói lista Alunos --------------------------- //
-template<typename T>
+template<typename T> //OK
 void destroi(Lista<T> &lista)
 {
     NodoAluno<T> *p;
@@ -70,32 +67,25 @@ bool verificarSeListaVazia(Lista<T> lista)
 }
 
 // ----------------------- Verifica o numero de alunos da lista -------------- //
-template<typename T>
+template<typename T> //OK
 int numeroAlunos(Lista<T> lista)
 {
     return lista.cardinalidade;
 }
 
 // ----------------------- Verifica o numero de disciplinas de um aluno ------ //
-template <typename T> // TESTAR PQ PROVAVELMENTE NAO ESTA CERTO
-int numeroDisciplinas(Lista<T> lista, T nome, T disc)
+template <typename T> // OK
+int numeroDisciplinas(Lista<T> lista, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
-    NodoDisciplina<T> *p2;
 
     while(p != NULL)
     {
         if(p->aluno == nome)
-        {
-            while(p2 != NULL)
-            {
-                if (p2->disciplina == disc)
-                    return p2->cardinalidade;
-                p2 = p2->proximo;
-            }
-        }
+            break; //O return foi pra baixo para não dar o warning de "função int sem retorno"
         p = p->proximo;
     }
+    return p->cardinalidadeD;
 }
 
 // ----------------------- Verifica se o aluno existe ------------------------ //
@@ -130,11 +120,11 @@ bool disciplinaExistente(Lista<T> lista, T disc, T nome)
 
                 p2 = p2->proximo;
             }
-            return false;
+            break;
         }
         p = p->proximo;
     }
-    return false; //Só pra não dar warning
+    return false;
 }
 // ----------------------------- Insere um aluno ----------------------------- //
 template<typename T> //OK
@@ -144,6 +134,7 @@ void inserirAluno(Lista<T> &lista, T nome)
     NodoDisciplina<T> *p2;
     p = new NodoAluno<T>;
     p->aluno = nome;
+    p->cardinalidadeD = 0;
     p->proximo = NULL;
 
     p2 = new NodoDisciplina<T>;
@@ -164,6 +155,7 @@ void inserirAluno(Lista<T> &lista, T nome)
     while(p_ant->proximo != NULL)
         p_ant = p_ant->proximo;
     p_ant->proximo = p;
+    lista.cardinalidade++;
 
     cout << "Aluno " << p->aluno << " inserido." << endl;
 }
@@ -188,6 +180,7 @@ void inserirDisciplina(Lista<T> &lista, T disc, T nome)
                     p2_ant = p2_ant->proximo;
                 p2_ant->proximo = p2;
             }
+            p->cardinalidadeD++;
             p2->disciplina = disc;
             p2->cardinalidade++;
             p2->quantidadeAlunos++;
@@ -198,11 +191,10 @@ void inserirDisciplina(Lista<T> &lista, T disc, T nome)
         }
         p = p->proximo;
     }
-    return; //Só pra não dar warning
 }
 
 // ----------------------------- Exclui um aluno ----------------------------- //
-template<typename T> //APARENTEMENTE FUNCIONANDO
+template<typename T> //OK
 void excluirAluno(Lista<T> &lista, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -226,8 +218,9 @@ void excluirAluno(Lista<T> &lista, T nome)
                 p_ant->proximo = p->proximo;
                 delete p;
                 cout << "Aluno excluido!" << endl;
-                return;
             }
+            lista.cardinalidade--;
+            return;
         }
         contador++;
         p = p->proximo;
@@ -297,7 +290,7 @@ void mostrarTodos(Lista<T> lista)
             cout << "O aluno não esta cadastrado em nenhuma disciplina" << endl;
         else
         {
-            cout << "Disciplinas: ";
+            cout << "Disciplinas (" << p->cardinalidadeD << "): " << endl;
             while(p2 != NULL)
             {
                 cout << p2->disciplina << " ";
