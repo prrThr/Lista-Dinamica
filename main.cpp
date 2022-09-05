@@ -9,21 +9,22 @@
 [x]Inserir um elemento na lista
 [x]Inserir um elemento associado a outro elemento da lista
 [x]Retirar um elemento da lista
-[ ]Retirar um elemento associado a outro elemento da lista
+[x]Retirar um elemento associado a outro elemento da lista
 [x]Mostrar uma lista
 [x]Mostrar os elementos associados a outro elemento da lista
 
 [x]Inserção de um aluno
 [x]Inserção de disciplina de um aluno
 [x]Retirar um aluno
-[ ]Retirar disciplina de um aluno
+[x]Retirar disciplina de um aluno
 [x]Mostrar todos os alunos e suas disciplinas
-[ ]Mostrar um aluno e suas disciplinas
+[x]Mostrar um aluno e suas disciplinas
 [ ]Gerar uma lista de listas com todas as disciplinas e o número de alunos que a cursam
 */
 
 #include <iostream>
 #include "header.h"
+#include <stdlib.h>
 using namespace std;
 int main()
 {
@@ -54,7 +55,7 @@ int main()
                 //cout << "Digite uma opção entre 1 e 8!" << endl;
         //}
         //while(opcao < 1 or opcao > 8);
-
+        system("cls");
         switch(opcao)
         {
         case 1:
@@ -78,7 +79,7 @@ int main()
                 if (!disciplinaExistente(alunos, disc, nome))
                     inserirDisciplina(alunos, disc, nome);
                 else
-                    cout << "O aluno " << nome << "já está matriculado na disciplina" << endl;
+                    cout << "O aluno " << nome << " já está matriculado na disciplina" << endl;
             }
             else
                 cout << "Aluno não existente." << endl;
@@ -105,7 +106,7 @@ int main()
                 if (disciplinaExistente(alunos, disc, nome))
                     excluirDisciplina(alunos, disc, nome);
                 else
-                    cout << "Disciplina não existe ou o aluno não está matriculado";
+                    cout << "Disciplina não existe ou o aluno não está matriculado" << endl;
             }
             else
                 cout << "Aluno não existente." << endl;
@@ -150,6 +151,7 @@ int main()
             cout << "Quantidade de alunos: " << numeroAlunos(alunos) << endl;
             break;
         }
+        cout << endl;
     }
     while(opcao != 8);
     return 0;

@@ -43,7 +43,7 @@ void criarListas(Lista<T> &lista)
     lista.inicioA = NULL;
 }
 
-// -------------------------- DestrÃ³i lista Alunos --------------------------- //
+// -------------------------- Destrói lista Alunos --------------------------- //
 template<typename T> //OK
 void destroi(Lista<T> &lista)
 {
@@ -82,7 +82,7 @@ int numeroDisciplinas(Lista<T> lista, T nome)
     while(p != NULL)
     {
         if(p->aluno == nome)
-            break; //O return foi pra baixo para nÃ£o dar o warning de "funÃ§Ã£o int sem retorno"
+            break; //O return foi pra baixo para não dar o warning de "função int sem retorno"
         p = p->proximo;
     }
     return p->cardinalidadeD;
@@ -136,13 +136,8 @@ void inserirAluno(Lista<T> &lista, T nome)
     p->aluno = nome;
     p->cardinalidadeD = 0;
     p->proximo = NULL;
+    p->inicioD = NULL;
 
-    p2 = new NodoDisciplina<T>;
-    p2->cardinalidade = 0;
-    p2->quantidadeAlunos = 0;
-    p2->proximo = NULL;
-
-    p->inicioD = p2; //Linka o aluno com o inicio lista de disciplinas
     if(lista.cardinalidade == 0)
     {
         lista.inicioA = p;
@@ -166,20 +161,22 @@ void inserirDisciplina(Lista<T> &lista, T disc, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
     NodoDisciplina<T> *p2, *p2_ant;
+    p2 = new NodoDisciplina<T>;
 
     while(p != NULL)
     {
         if(p->aluno == nome)
         {
-            p2 = p->inicioD;
-            if (p2->cardinalidade > 0)
+            if (p->cardinalidadeD > 0)
             {
-                p2 = new NodoDisciplina<T>;
                 p2_ant = p->inicioD;
                 while(p2_ant->proximo != NULL)
                     p2_ant = p2_ant->proximo;
                 p2_ant->proximo = p2;
             }
+            else
+                p->inicioD = p2;
+
             p->cardinalidadeD++;
             p2->disciplina = disc;
             p2->cardinalidade++;
@@ -205,20 +202,15 @@ void excluirAluno(Lista<T> &lista, T nome)
         if (p->aluno == nome)
         {
             if (contador == 1) //caso for o primeiro da lista
-            {
                 lista.inicioA = lista.inicioA->proximo;
-                cout << "chegou aqui" << endl;
-                delete p;
-            }
             else
             {
                 while(p_ant->proximo != p)
                     p_ant = p_ant->proximo;
-                cout << "chegou aqui" << endl;
                 p_ant->proximo = p->proximo;
-                delete p;
-                cout << "Aluno excluido!" << endl;
             }
+            delete p;
+            cout << "Aluno excluido!" << endl;
             lista.cardinalidade--;
             return;
         }
@@ -233,8 +225,8 @@ void excluirAluno(Lista<T> &lista, T nome)
 //delete p(1020)
 
 // -------------------------- Exclui uma disciplina de um aluno -------------- //
-template<typename T>
-void excluirDisciplina(Lista<T> &lista, T disciplina, T nome)
+template<typename T> //OK
+void excluirDisciplina(Lista<T> &lista, T disc, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
     NodoDisciplina<T> *p2_ant, *p2;
@@ -245,25 +237,22 @@ void excluirDisciplina(Lista<T> &lista, T disciplina, T nome)
         if (p->aluno == nome)
         {
             p2 = p->inicioD;
-            p2_ant = p->inicioD;
-            cout << "chegou aqui" << endl;
             while(p2 != NULL)
             {
-                cout << "chegou aqui" << endl;
+                if(p2->disciplina == disc)
+                {
+                    if (contador == 1) //caso for o primeiro da lista
+                        p->inicioD = p->inicioD->proximo;
 
-                if (contador == 1) //caso for o primeiro da lista
-                {
-                    p2 = p2->proximo;
-                    cout << "chegou aqui" << endl;
+                    else
+                    {
+                        p2_ant = p->inicioD;
+                        while(p2_ant->proximo != p2)
+                            p2_ant = p2_ant->proximo;
+                        p2_ant->proximo = p2->proximo;
+                    }
                     delete p2;
-                }
-                else
-                {
-                    while(p2_ant->proximo != p2)
-                        p2_ant = p2_ant->proximo;
-                    cout << "chegou aqui" << endl;
-                    p2_ant->proximo = p2->proximo;
-                    delete p2;
+                    p->cardinalidadeD--;
                     cout << "Disciplina excluida!" << endl;
                     return;
                 }
@@ -287,13 +276,13 @@ void mostrarTodos(Lista<T> lista)
         p2 = p->inicioD;
         cout << "Aluno: " << p->aluno << endl;
         if (p2 == NULL)
-            cout << "O aluno nÃ£o esta cadastrado em nenhuma disciplina" << endl;
+            cout << "O aluno não esta cadastrado em nenhuma disciplina" << endl;
         else
         {
             cout << "Disciplinas (" << p->cardinalidadeD << "): " << endl;
             while(p2 != NULL)
             {
-                cout << p2->disciplina << " ";
+                cout << "-" << p2->disciplina << endl;
                 p2 = p2->proximo;
             }
             cout << endl;
@@ -303,7 +292,7 @@ void mostrarTodos(Lista<T> lista)
 }
 
 // -------------------- Mostra um aluno e suas disciplinas -------------------- //
-template<typename T> //APARENTEMENTE FUNCIONANDO
+template<typename T> //OK
 void mostrarUm(Lista<T> lista, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -318,13 +307,13 @@ void mostrarUm(Lista<T> lista, T nome)
             cout << "Aluno: " << p->aluno << endl;
             if (p2 == NULL)
             {
-                cout << "O aluno nÃ£o esta cadastrado em nenhuma disciplina" << endl;
+                cout << "O aluno não esta cadastrado em nenhuma disciplina" << endl;
                 return;
             }
-            cout << "Disciplinas: ";
+            cout << "Disciplinas: " << endl;
             while(p2 != NULL)
             {
-                cout << p2->disciplina << " ";
+                cout << "-" << p2->disciplina << endl;
                 p2 = p2->proximo;
             }
             cout << endl;
