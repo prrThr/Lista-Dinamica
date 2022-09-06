@@ -35,7 +35,7 @@ int main()
     int opcao;
     string nome, disc;
 
-    criarListas(alunos, disciplinas);
+    criarListas(alunos);
     do
     {
         cout << "1 - Inserir aluno" << endl;
@@ -44,8 +44,7 @@ int main()
         cout << "4 - Retirar disciplina de um aluno" << endl;
         cout << "5 - Mostrar todos os alunos e todas as disciplinas" << endl;
         cout << "6 - Mostar aluno e suas disciplinas" << endl;
-        cout << "7 - Mostrar lista 2" << endl;
-        cout << "8 - Sair" << endl;
+        cout << "7 - Sair e mostrar lista de disciplinas" << endl;
         cout << "\n----- Área de testes - deletar funções seguintes ao terminar o programa -----" << endl;
         cout << "9 - Retorna o numero de disciplinas de um aluno" << endl;
         cout << "10 - Retorna o numero de alunos" << endl;
@@ -121,12 +120,12 @@ int main()
             break;
 
         case 7:
+            criarLista2(disciplinas);
+            preencherlista2(disciplinas, alunos);
+            cout << "PASSOU O preencherlista2" << endl;
             mostrarLista2(disciplinas);
-            break;
-
-        case 8:
-            cout << "Saindo..." << endl;
             destroi(alunos); //A lista de disciplinas está dentro da lista "alunos"
+            cout << "Saindo..." << endl;
             break;
 
         case 9:
