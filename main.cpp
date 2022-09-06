@@ -31,10 +31,11 @@ int main()
     setlocale(LC_ALL,"Portuguese");
 
     Lista<string> alunos;
+    ListaDisciplinas<string> disciplinas;
     int opcao;
     string nome, disc;
 
-    criarListas(alunos);
+    criarListas(alunos, disciplinas);
     do
     {
         cout << "1 - Inserir aluno" << endl;
@@ -43,7 +44,7 @@ int main()
         cout << "4 - Retirar disciplina de um aluno" << endl;
         cout << "5 - Mostrar todos os alunos e todas as disciplinas" << endl;
         cout << "6 - Mostar aluno e suas disciplinas" << endl;
-        cout << "7 - (Depois transformar em -Mostrar lista 2-)" << endl;
+        cout << "7 - Mostrar lista 2" << endl;
         cout << "8 - Sair" << endl;
         cout << "\n----- Área de testes - deletar funções seguintes ao terminar o programa -----" << endl;
         cout << "9 - Retorna o numero de disciplinas de um aluno" << endl;
@@ -73,7 +74,7 @@ int main()
                 cout << "Digite a disciplina que deseja inserir:";
                 getline(cin, disc);
                 if (!disciplinaExistente(alunos, disc, nome))
-                    inserirDisciplina(alunos, disc, nome);
+                    inserirDisciplina(alunos, disciplinas, disc, nome);
                 else
                     cout << "O aluno " << nome << " já está matriculado na disciplina" << endl;
             }
@@ -119,8 +120,9 @@ int main()
                 cout << "Aluno inexistente." << endl;
             break;
 
-        //case 7:
-        //    break;
+        case 7:
+            mostrarLista2(disciplinas);
+            break;
 
         case 8:
             cout << "Saindo..." << endl;
