@@ -1,27 +1,3 @@
-/*
-[x]Criar uma lista
-[x]Destruir uma lista
-[x]Verificar se a lista está vazia
-[x]Recuperar o número de elementos da lista
-[x]Recuperar o número de elementos associado a outro elemento da lista
-[x]Verificar se um elemento existe na lista
-[x]Verificar se um elemento associado a outro elemento existe na lista
-[x]Inserir um elemento na lista
-[x]Inserir um elemento associado a outro elemento da lista
-[x]Retirar um elemento da lista
-[x]Retirar um elemento associado a outro elemento da lista
-[x]Mostrar uma lista
-[x]Mostrar os elementos associados a outro elemento da lista
-
-[x]Inserção de um aluno
-[x]Inserção de disciplina de um aluno
-[x]Retirar um aluno
-[x]Retirar disciplina de um aluno
-[x]Mostrar todos os alunos e suas disciplinas
-[x]Mostrar um aluno e suas disciplinas
-[ ]Gerar uma lista de listas com todas as disciplinas e o número de alunos que a cursam
-*/
-
 #include <iostream>
 #include "header.h"
 #include <stdlib.h>
@@ -35,7 +11,7 @@ int main()
     int opcao;
     string nome, disc;
 
-    criarListas(alunos);
+    criarListas(alunos, disciplinas);
     do
     {
         cout << "1 - Inserir aluno" << endl;
@@ -44,15 +20,16 @@ int main()
         cout << "4 - Retirar disciplina de um aluno" << endl;
         cout << "5 - Mostrar todos os alunos e todas as disciplinas" << endl;
         cout << "6 - Mostar aluno e suas disciplinas" << endl;
-        cout << "7 - Sair e mostrar lista de disciplinas" << endl;
-        cout << "\n----- Área de testes - deletar funções seguintes ao terminar o programa -----" << endl;
+        cout << "7 - Mostrar lista 2" << endl;
+        cout << "8 - Sair" << endl;
+        cout << "\n----- Ãrea de testes - deletar funÃ§Ãµes seguintes ao terminar o programa -----" << endl;
         cout << "9 - Retorna o numero de disciplinas de um aluno" << endl;
         cout << "10 - Retorna o numero de alunos" << endl;
         //do
         //{
-            cin >> opcao;
-            //if (opcao < 1 or opcao > 8)
-                //cout << "Digite uma opção entre 1 e 8!" << endl;
+        cin >> opcao;
+        //if (opcao < 1 or opcao > 8)
+        //cout << "Digite uma opÃ§Ã£o entre 1 e 8!" << endl;
         //}
         //while(opcao < 1 or opcao > 8);
         system("cls");
@@ -63,7 +40,7 @@ int main()
             if (!alunoExistente(alunos, nome))
                 inserirAluno(alunos, nome);
             else
-                cout << "Aluno já existente." << endl;
+                cout << "Aluno jÃ¡ existente." << endl;
             break;
 
         case 2:
@@ -75,10 +52,10 @@ int main()
                 if (!disciplinaExistente(alunos, disc, nome))
                     inserirDisciplina(alunos, disciplinas, disc, nome);
                 else
-                    cout << "O aluno " << nome << " já está matriculado na disciplina" << endl;
+                    cout << "O aluno " << nome << " jÃ¡ estÃ¡ matriculado na disciplina" << endl;
             }
             else
-                cout << "Aluno não existente." << endl;
+                cout << "Aluno nÃ£o existente." << endl;
             break;
 
         case 3:
@@ -86,7 +63,7 @@ int main()
             if (alunoExistente(alunos, nome))
                 excluirAluno(alunos, nome);
             else
-                cout << "Aluno não existente." << endl;
+                cout << "Aluno nÃ£o existente." << endl;
             break;
 
         case 4:
@@ -96,12 +73,12 @@ int main()
                 cout << "Informe a disciplina que deseja excluir: ";
                 getline(cin, disc);
                 if (disciplinaExistente(alunos, disc, nome))
-                    excluirDisciplina(alunos, disc, nome);
+                    excluirDisciplina(alunos, disc, nome, disciplinas);
                 else
-                    cout << "Disciplina não existe ou o aluno não está matriculado" << endl;
+                    cout << "Disciplina nÃ£o existe ou o aluno nÃ£o estÃ¡ matriculado" << endl;
             }
             else
-                cout << "Aluno não existente." << endl;
+                cout << "Aluno nÃ£o existente." << endl;
             break;
 
         case 5:
@@ -120,12 +97,12 @@ int main()
             break;
 
         case 7:
-            criarLista2(disciplinas);
-            preencherlista2(disciplinas, alunos);
-            cout << "PASSOU O preencherlista2" << endl;
             mostrarLista2(disciplinas);
-            destroi(alunos); //A lista de disciplinas está dentro da lista "alunos"
+            break;
+
+        case 8:
             cout << "Saindo..." << endl;
+            destroi(alunos); //A lista de disciplinas estÃ¡ dentro da lista "alunos"
             break;
 
         case 9:
@@ -133,7 +110,7 @@ int main()
             if (alunoExistente(alunos,nome))
                 cout << "Numero de disciplinas do aluno " << nome << ": " << numeroDisciplinas(alunos, nome) << endl;
             else
-                cout << "Aluno não existente" << endl;
+                cout << "Aluno nÃ£o existente" << endl;
             break;
 
         case 10:
