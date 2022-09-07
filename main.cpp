@@ -20,18 +20,15 @@ int main()
         cout << "4 - Retirar disciplina de um aluno" << endl;
         cout << "5 - Mostrar todos os alunos e todas as disciplinas" << endl;
         cout << "6 - Mostar aluno e suas disciplinas" << endl;
-        cout << "7 - Mostrar lista 2" << endl;
+        cout << "7 - Mostrar lista de disciplinas (lista2)" << endl;
         cout << "8 - Sair" << endl;
-        cout << "\n----- Área de testes - deletar funções seguintes ao terminar o programa -----" << endl;
-        cout << "9 - Retorna o numero de disciplinas de um aluno" << endl;
-        cout << "10 - Retorna o numero de alunos" << endl;
-        //do
-        //{
-        cin >> opcao;
-        //if (opcao < 1 or opcao > 8)
-        //cout << "Digite uma opção entre 1 e 8!" << endl;
-        //}
-        //while(opcao < 1 or opcao > 8);
+        do
+        {
+            cin >> opcao;
+            if (opcao < 1 or opcao > 8)
+                cout << "Digite uma opção entre 1 e 8!" << endl;
+        }
+        while(opcao < 1 or opcao > 8);
         system("cls");
         switch(opcao)
         {
@@ -61,7 +58,7 @@ int main()
         case 3:
             nome = inserirNome("Digite o aluno que deseja excluir: ");
             if (alunoExistente(alunos, nome))
-                excluirAluno(alunos, nome);
+                excluirAluno(alunos, disciplinas, nome);
             else
                 cout << "Aluno não existente." << endl;
             break;

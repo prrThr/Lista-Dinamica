@@ -5,7 +5,7 @@ template<typename T>
 struct NodoDisciplina
 {
     T disciplina;
-    int cardinalidade; // Quantidade de alunos que cursam a disciplina
+    int cardinalidade; //Quantidade de alunos que cursam a disciplina
     struct NodoDisciplina *proximo;
 };
 
@@ -28,12 +28,12 @@ struct Lista
 template<typename T>
 struct ListaDisciplinas
 {
-    int cardinalidade; //Quantidade total de disciplinas
+    int cardinalidade; //Quantidade de disciplinas no total
     NodoDisciplina<T> *inicioLD;
 };
 
 // --------------------------- Cria as duas listas --------------------------- //
-template<typename T> //OK
+template<typename T>
 void criarListas(Lista<T> &lista, ListaDisciplinas<T> &lista2)
 {
     lista.cardinalidade = 0;
@@ -42,8 +42,8 @@ void criarListas(Lista<T> &lista, ListaDisciplinas<T> &lista2)
     lista2.inicioLD = NULL;
 }
 
-// -------------------------- Destrói lista Alunos --------------------------- //
-template<typename T> //OK
+// -------------------------- Destroi a lista 1 (Alunos) --------------------------- //
+template<typename T>
 void destroi(Lista<T> &lista)
 {
     NodoAluno<T> *p;
@@ -56,7 +56,7 @@ void destroi(Lista<T> &lista)
     lista.cardinalidade = 0;
 }
 // ------------------------- Verifica se lista vazia ------------------------- //
-template<typename T> //OK
+template<typename T>
 bool verificarSeListaVazia(Lista<T> lista)
 {
     if (lista.cardinalidade == 0)
@@ -66,14 +66,14 @@ bool verificarSeListaVazia(Lista<T> lista)
 }
 
 // ----------------------- Verifica o numero de alunos da lista -------------- //
-template<typename T> //OK
+template<typename T>
 int numeroAlunos(Lista<T> lista)
 {
     return lista.cardinalidade;
 }
 
 // ----------------------- Verifica o numero de disciplinas de um aluno ------ //
-template <typename T> // OK
+template <typename T>
 int numeroDisciplinas(Lista<T> lista, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -81,14 +81,14 @@ int numeroDisciplinas(Lista<T> lista, T nome)
     while(p != NULL)
     {
         if(p->aluno == nome)
-            break; //O return foi pra baixo para não dar o warning de "função int sem retorno"
+            break;
         p = p->proximo;
     }
     return p->cardinalidadeD;
 }
 
 // ----------------------- Verifica se o aluno existe ------------------------ //
-template<typename T> //OK
+template<typename T>
 bool alunoExistente(Lista<T> lista, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -102,7 +102,7 @@ bool alunoExistente(Lista<T> lista, T nome)
 }
 
 // --------------------- Verifica se a disciplina de um aluno existe --------- //
-template<typename T> //OK
+template<typename T>
 bool disciplinaExistente(Lista<T> lista, T disc, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -116,7 +116,6 @@ bool disciplinaExistente(Lista<T> lista, T disc, T nome)
             {
                 if (p2->disciplina == disc)
                     return true;
-
                 p2 = p2->proximo;
             }
             break;
@@ -126,7 +125,7 @@ bool disciplinaExistente(Lista<T> lista, T disc, T nome)
     return false;
 }
 // ----------------------------- Insere um aluno ----------------------------- //
-template<typename T> //OK
+template<typename T>
 void inserirAluno(Lista<T> &lista, T nome)
 {
     NodoAluno<T> *p, *p_ant;
@@ -149,7 +148,6 @@ void inserirAluno(Lista<T> &lista, T nome)
         p_ant = p_ant->proximo;
     p_ant->proximo = p;
     lista.cardinalidade++;
-
     cout << "Aluno " << p->aluno << " inserido." << endl;
 }
 // ------------- Adicionar cardinalidade na lista de disciplinas ------------- //
@@ -166,18 +164,15 @@ void adicionaListaDisciplinas(ListaDisciplinas<T> &lista2, string disc)
         p->disciplina = disc;
         p->proximo = NULL;
         lista2.cardinalidade++;
-        cout << "Primeiro elemento da lista inserido" << endl;
     }
     else
     {
-        cout << "inserindo proximos elementos..." << endl;
         p = lista2.inicioLD;
         while(p != NULL)
         {
-            cout << p->disciplina << " " << disc << endl;
+
             if (p->disciplina == disc)
             {
-                cout << "elemento ja existente" << endl;
                 p->cardinalidade++;
                 return;
             }
@@ -196,10 +191,8 @@ void adicionaListaDisciplinas(ListaDisciplinas<T> &lista2, string disc)
 
                 if(trava == true)
                 {
-                    cout << "elemento novo" << endl;
                     p_aux = new NodoDisciplina<T>;
                     p_aux->disciplina = disc;
-                    cout << "disciplina nova: " << p_aux->disciplina << endl;
                     p_aux->cardinalidade = 1;
                     p_aux->proximo = NULL;
                     lista2.cardinalidade++;
@@ -213,15 +206,9 @@ void adicionaListaDisciplinas(ListaDisciplinas<T> &lista2, string disc)
             }
         }
     }
-    p = lista2.inicioLD;
-    while(p != NULL)
-    {
-        cout << p << endl;
-        p = p->proximo;
-    }
 }
 // ----------------------------- Insere uma disciplina de um aluno ----------- //
-template<typename T> // OK
+template<typename T>
 void inserirDisciplina(Lista<T> &lista, ListaDisciplinas<T> &lista2,T disc, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -255,17 +242,18 @@ void inserirDisciplina(Lista<T> &lista, ListaDisciplinas<T> &lista2,T disc, T no
 }
 
 // ----------------------------- Exclui um aluno ----------------------------- //
-template<typename T> //OK
-void excluirAluno(Lista<T> &lista, T nome)
+template<typename T>
+void excluirAluno(Lista<T> &lista, ListaDisciplinas<T> &lista2, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
     NodoAluno<T> *p_ant = lista.inicioA;
     int contador = 1;
+    excluirLista2Aluno(lista2, lista, nome);
     while(p != NULL)
     {
         if (p->aluno == nome)
         {
-            if (contador == 1) //caso for o primeiro da lista
+            if (contador == 1)
                 lista.inicioA = lista.inicioA->proximo;
             else
             {
@@ -284,7 +272,7 @@ void excluirAluno(Lista<T> &lista, T nome)
 }
 
 // -------------------------- Exclui uma disciplina de um aluno -------------- //
-template<typename T> //OK
+template<typename T>
 void excluirDisciplina(Lista<T> &lista, T disc, T nome, ListaDisciplinas<T> &lista2)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -300,7 +288,7 @@ void excluirDisciplina(Lista<T> &lista, T disc, T nome, ListaDisciplinas<T> &lis
             {
                 if(p2->disciplina == disc)
                 {
-                    if (contador == 1) //caso for o primeiro da lista
+                    if (contador == 1) //Caso for o primeiro da lista
                         p->inicioD = p->inicioD->proximo;
 
                     else
@@ -315,15 +303,13 @@ void excluirDisciplina(Lista<T> &lista, T disc, T nome, ListaDisciplinas<T> &lis
                     cout << "Disciplina excluida!" << endl;
                 }
                 else
-                {
                     contador++;
-                    p2 = p2->proximo;
-                }
+
+                p2 = p2->proximo;
             }
         }
         p = p->proximo;
     }
-    cout << "chegou aqui" << endl;
     excluirlista2(lista2, disc);
 }
 
@@ -331,38 +317,35 @@ void excluirDisciplina(Lista<T> &lista, T disc, T nome, ListaDisciplinas<T> &lis
 template<typename T>
 void excluirlista2(ListaDisciplinas<T> &lista, T nome)
 {
-    NodoDisciplina<T> *p = lista.inicioLD;
+    NodoDisciplina<T> *p = lista.inicioLD, *p_aux;
     NodoDisciplina<T> *p_ant = lista.inicioLD;
     int contador = 1;
     while(p != NULL)
     {
-        cout << "chegou aqui 1" << endl;
         if (p->disciplina == nome)
         {
-            cout << "chegou aqui 2" << endl;
-            if (contador == 1)//caso for o primeiro da lista
+            if (contador == 1)//Caso for o primeiro da lista
             {
                 lista.inicioLD->cardinalidade--;
                 if(lista.inicioLD->cardinalidade == 0)
                 {
-                    cout << "chegou aqui 3" << endl;
+                    p_aux = lista.inicioLD;
                     lista.inicioLD = lista.inicioLD->proximo;
+                    delete p_aux;
                     lista.cardinalidade--;
                 }
                 return;
             }
             else
             {
-                cout << "chegou aqui 4" << endl;
                 while(p_ant->proximo != p)
                     p_ant = p_ant->proximo;
                 p_ant->proximo = p->proximo;
-                lista.inicioLD->cardinalidade--;
-                if(lista.inicioLD->cardinalidade == 0)
+                p->cardinalidade--;
+                if(p->cardinalidade == 0)
                 {
-                    cout << "chegou aqui 5" << endl;
-                    delete p;
                     lista.cardinalidade--;
+                    delete p;
                 }
                 return;
             }
@@ -371,8 +354,52 @@ void excluirlista2(ListaDisciplinas<T> &lista, T nome)
         p = p->proximo;
     }
 }
+
+
+// ------------------- Excluir Lista2 quando excluir o aluno ------------------- //
+template<typename T>
+void excluirLista2Aluno(ListaDisciplinas<T> &lista2, Lista<T> lista, T nome)
+{
+    NodoAluno<T> *p = lista.inicioA;
+    NodoDisciplina<T> *p3, *p2, *p_ant;
+    while(p != NULL)
+    {
+        if (p->aluno == nome)
+        {
+            p2 = p->inicioD;
+            while(p2 != NULL)
+            {
+                p3 = lista2.inicioLD;
+                while(p3 != NULL)
+                {
+                    if (p3->disciplina == p2->disciplina)
+                    {
+                        p3->cardinalidade--;
+                        if(p3->cardinalidade == 0)
+                        {
+                            if (lista2.inicioLD == p3)
+                                lista2.inicioLD = p3->proximo;
+                            else
+                            {
+                                while(p_ant->proximo != p3)
+                                    p_ant = p_ant->proximo;
+                                p_ant->proximo = p3->proximo;
+                                lista2.inicioLD->cardinalidade--;
+                            }
+                            lista2.cardinalidade--;
+                            delete p3;
+                        }
+                    }
+                    p3 = p3->proximo;
+                }
+                p2 = p2->proximo;
+            }
+        }
+        p = p->proximo;
+    }
+}
 // -------------------- Mostra os alunos e as disciplinas -------------------- //
-template<typename T> //OK
+template<typename T>
 void mostrarTodos(Lista<T> lista)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -383,7 +410,7 @@ void mostrarTodos(Lista<T> lista)
         p2 = p->inicioD;
         cout << "Aluno: " << p->aluno << endl;
         if (p2 == NULL)
-            cout << "O aluno não esta cadastrado em nenhuma disciplina" << endl;
+            cout << "O aluno não esta cadastrado em nenhuma disciplina" << endl << endl;
         else
         {
             cout << "Disciplinas (" << p->cardinalidadeD << "): " << endl;
@@ -399,7 +426,7 @@ void mostrarTodos(Lista<T> lista)
 }
 
 // -------------------- Mostra um aluno e suas disciplinas -------------------- //
-template<typename T> //OK
+template<typename T>
 void mostrarUm(Lista<T> lista, T nome)
 {
     NodoAluno<T> *p = lista.inicioA;
@@ -430,6 +457,7 @@ void mostrarUm(Lista<T> lista, T nome)
     }
 }
 
+// -------------------- Mostra a Lista 2 (disciplinas) -------------------- //
 template<typename T>
 void mostrarLista2(ListaDisciplinas<T> lista2)
 {
@@ -449,6 +477,7 @@ void mostrarLista2(ListaDisciplinas<T> lista2)
     }
 }
 
+// -------------------------  ------------------------- //
 string inserirNome(string texto)
 {
     string nome;
